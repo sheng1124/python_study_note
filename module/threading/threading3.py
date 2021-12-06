@@ -32,6 +32,15 @@ filenames2 = [
     'd2.html'
 ]
 
+#阻斷
+#有時候需要等待輸入或連線，這個行為叫做阻斷 
+#如果沒有可以切換的執行緒，直譯器會等待目前的阻斷作業
+#以下是需要阻斷的程式碼 下載檔案並寫入
+start = time.perf_counter()
+for url, filename in zip(urls, filenames1):
+    download(url, filename)
+print("block ", time.perf_counter() - start) #2.2272031
+
 #以下是使用多執行續
 start = time.perf_counter()
 threads=[]
@@ -44,13 +53,3 @@ for url, filename in zip(urls, filenames2):
 for t in threads:
     t.join()
 print("threads ", time.perf_counter() - start) #0.7187613000000002 
-
-#阻斷
-#有時候需要等待輸入或連線，這個行為叫做阻斷 
-#如果沒有可以切換的執行緒，直譯器會等待目前的阻斷作業
-#以下是需要阻斷的程式碼 下載檔案並寫入
-start = time.perf_counter()
-for url, filename in zip(urls, filenames1):
-    download(url, filename)
-print("block ", time.perf_counter() - start) #2.2272031
-
